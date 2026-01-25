@@ -1,23 +1,716 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+   <style>
+        /* CSS Reset and Global Styles */
+        body {
+            font-family: "Noto Sans KR", sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            background-color: #f8f8f8;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+        header {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin: 0;
+            font-weight: 700;
+            color: #333;
+        }
+        nav {
+            margin-top: 1rem;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        nav a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        nav a:hover {
+            color: #c4a79a; /* Warm beige/brown color for marble theme */
+            transform: translateY(-2px);
+        }
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+        }
+        section {
+            padding: 3rem 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        section:last-child {
+            border-bottom: none;
+        }
+        h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+        }
+        h2::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #c4a79a;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+        h3 {
+            font-size: 1.8rem;
+            color: #4a6c8a;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            border-left: 5px solid #c4a79a;
+            padding-left: 1rem;
+        }
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: #555;
+        }
+        strong {
+            color: #c4a79a;
+            font-weight: 700;
+        }
+        .intro-text {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Call to Action Button */
+        .cta-button {
+            display: block;
+            background-color: #c4a79a;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 2rem auto;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            max-width: 300px;
+        }
+        .cta-button:hover {
+            background-color: #a38b7e;
+            transform: scale(1.05);
+        }
+
+        /* Keyword Tags Section */
+        .keyword-tags {
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+        .keyword-tags a {
+            display: inline-block;
+            background-color: #f0f4f7;
+            color: #4a6c8a;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .keyword-tags a:hover {
+            background-color: #e0eaf3;
+        }
+
+        /* Tables and Data Presentation */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        th, td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: #4a6c8a;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+        td {
+            background-color: #ffffff;
+            font-size: 0.95rem;
+        }
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        /* Interactive Elements (FAQ Accordion) */
+        .faq-accordion dt {
+            background-color: #f5f5f5;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .faq-accordion dt:hover {
+            background-color: #e9e9e9;
+        }
+        .faq-accordion dt.active {
+            background-color: #c4a79a;
+            color: white;
+        }
+        .faq-accordion dd {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            margin-left: 0;
+            border-radius: 0 0 8px 8px;
+            display: none;
+        }
+        .faq-accordion dt.active + dd {
+            display: block;
+        }
+
+        /* Form Styling */
+        .contact-form {
+            background-color: #f0f4f7;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 1px solid #e0e0e0;
+        }
+        .contact-form fieldset {
+            border: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+        .contact-form legend {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4a6c8a;
+        }
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form input[type="tel"],
+        .contact-form select,
+        .contact-form textarea {
+            width: calc(100% - 2rem);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .contact-form button {
+            background-color: #c4a79a;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .contact-form button:hover {
+            background-color: #a38b7e;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: #777;
+            background-color: #ffffff;
+            margin-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            nav a {
+                font-size: 0.9rem;
+            }
+            main {
+                margin: 1rem;
+                padding: 0 1rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* External Link Styling */
+        .external-links ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .external-links li a {
+            color: #4a6c8a;
+            text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid #4a6c8a;
+            border-radius: 20px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .external-links li a:hover {
+            background-color: #4a6c8a;
+            color: white;
+        }
+
+        /* Infographic/Comparison Table styling */
+        .comparison-table {
+            background-color: #f7f7f7;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        .comparison-table h4 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+    <!-- JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "대리석 인테리어 시공 및 자재 판매",
+      "provider": {
+        "@type": "Organization",
+        "name": "전국 대리석 인테리어 전문",
+        "url": "https://yourdomain.com",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+82-10-1234-5678",
+          "contactType": "고객 서비스"
+        }
+      },
+      "areaServed": [
+        { "@type": "State", "name": "서울시" },
+        { "@type": "State", "name": "경기도" },
+        { "@type": "State", "name": "부산시" },
+        { "@type": "State", "name": "대구시" },
+        { "@type": "State", "name": "인천시" }
+      ],
+      "description": "2026년 최신 대리석 인테리어 비용 정보와 견적을 제공합니다. 천연대리석, 인조대리석, 엔지니어드 스톤의 장단점을 비교하고 전국 시공 전문가를 추천합니다.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "대리석 시공 서비스 가격",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "천연 대리석 바닥 시공"
+            },
+            "priceSpecification": {
+                "@type": "PriceSpecification",
+                "price": "200000",
+                "priceCurrency": "KRW",
+                "description": "평당 예상 가격, 자재 등급 및 시공 난이도에 따라 변동"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "엔지니어드 스톤 주방 상판 시공"
+            },
+            "priceSpecification": {
+                "@type": "PriceSpecification",
+                "price": "150000",
+                "priceCurrency": "KRW",
+                "description": "미터당 예상 가격, 자재 브랜드 및 디자인에 따라 변동"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "대리석 벽체 아트월 시공"
+            },
+            "priceSpecification": {
+                "@type": "PriceSpecification",
+                "price": "180000",
+                "priceCurrency": "KRW",
+                "description": "평당 예상 가격, 자재의 희소성 및 가공 방법에 따라 변동"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>대리석 인테리어 전문가 추천 플랫폼</h1>
+        <nav>
+            <ul>
+                <li><a href="#intro">대리석 인테리어란?</a></li>
+                <li><a href="#type">대리석 종류 및 특징</a></li>
+                <li><a href="#cost">비용 견적 및 가격 비교</a></li>
+                <li><a href="#compare">장단점 비교</a></li>
+                <li><a href="#faq">자주 묻는 질문</a></li>
+                <li><a href="#contact">전문가 견적 문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <!-- Section 1: Introduction -->
+        <section id="intro">
+            <h2>고품격 공간을 위한 <strong>대리석 인테리어</strong>, 2026년 트렌드 분석</h2>
+            <p class="intro-text"><strong>대리석 인테리어</strong>는 시간이 흘러도 변하지 않는 우아함과 고급스러움을 상징합니다. 2026년에도 주거 공간과 상업 공간 모두에서 최고급 마감재로 손꼽히며, 특히 <strong>천연대리석</strong> 특유의 패턴은 다른 어떤 자재로도 대체할 수 없는 가치를 선사합니다. 저희 플랫폼은 <strong>전국 대리석 인테리어 전문가</strong>와 고객님을 연결하여, <strong>합리적인 가격</strong>으로 만족스러운 결과를 얻을 수 있도록 돕습니다. <strong>대리석 시공</strong>을 고민하고 있다면, 지금부터 전문가들이 알려주는 핵심 정보를 확인해 보세요.</p>
+            <p><strong>대리석 인테리어</strong>를 통해 공간의 품격을 한층 높이는 방법을 소개합니다. <strong>대리석 바닥</strong>, <strong>대리석 주방 상판</strong>, <strong>대리석 아트월</strong> 등 다양한 시공 사례와 함께 <strong>대리석 비용</strong>을 절감할 수 있는 팁을 제공합니다. 특히 <strong>대리석 인테리어 견적</strong>은 자재의 종류, 시공 방식, 지역별 인건비 등에 따라 크게 달라지므로, 전문가와 정확한 상담을 진행하는 것이 중요합니다.</p>
+
+            <div class="keyword-tags" aria-label="연관 키워드">
+                <a href="#cost">대리석 인테리어 비용</a>
+                <a href="#compare">천연대리석 장단점</a>
+                <a href="#type">엔지니어드 스톤 가격</a>
+                <a href="#cost">대리석 평당 견적</a>
+                <a href="#compare">대리석 vs 포세린 타일 비교</a>
+                <a href="#cost">대리석 시공 저렴한곳</a>
+                <a href="#faq">대리석 유지보수 팁</a>
+                <a href="#type">대리석 종류</a>
+                <a href="#contact">전국 대리석 시공업체 추천</a>
+            </div>
+        </section>
+
+        <!-- Section 2: Types of Marble and Applications -->
+        <section id="type">
+            <h2>대리석 종류별 특징과 인테리어 활용법</h2>
+            <p><strong>천연대리석</strong>은 크게 석회암이 변성된 대리암과 규암 계열로 나뉘며, 원산지와 성분에 따라 고유한 무늬와 색상을 가집니다. 대표적인 대리석 종류로는 <strong>비앙코 카라라</strong>, <strong>볼락스</strong>, <strong>스타투아리오</strong> 등이 있으며, 각각의 특징을 이해하는 것이 <strong>대리석 인테리어</strong>의 첫걸음입니다.</p>
+
+            <div class="service-description">
+                <h3>1. 천연 대리석 (Natural Marble)</h3>
+                <p>자연이 빚어낸 독특한 패턴과 질감이 특징입니다. <strong>천연대리석 인테리어</strong>는 시간이 지나도 변치 않는 가치를 제공하지만, <strong>천연대리석 단점</strong>으로는 산성에 약하고 흡수율이 높아 오염에 취약하다는 점이 있습니다. 주기적인 관리가 필요하지만, 이로 인해 공간의 품격은 최고 수준으로 유지됩니다.</p>
+                <ul>
+                    <li><strong>비앙코 카라라 (Bianco Carrara):</strong> 이탈리아산 백색 대리석으로, 은은한 회색 베인이 특징입니다. <strong>대리석 주방 상판</strong>이나 <strong>대리석 바닥</strong>에 널리 사용되며, 깨끗하고 모던한 분위기를 연출합니다.</li>
+                    <li><strong>볼락스 (Volakas):</strong> 그리스산 대리석으로, 비앙코 카라라와 유사하지만 더 섬세하고 구름 같은 무늬가 특징입니다. <strong>벽체 아트월</strong>이나 고급 가구 상판에 적합합니다.</li>
+                    <li><strong>네로 마르퀴나 (Nero Marquina):</strong> 스페인산 블랙 대리석으로, 강렬한 검은색 바탕에 흰색 베인이 대비를 이룹니다. 포인트를 주는 <strong>대리석 인테리어</strong>에 많이 활용됩니다.</li>
+                </ul>
+            </div>
+
+            <div class="service-description">
+                <h3>2. 엔지니어드 스톤 (Engineered Stone)</h3>
+                <p><strong>엔지니어드 스톤</strong>은 천연 석영을 90% 이상 사용하여 만든 인조 대리석의 한 종류입니다. <strong>천연 대리석과 인조 대리석의 차이점</strong>을 찾는 고객에게 최적의 대안으로, <strong>엔지니어드 스톤 장점</strong>은 천연 대리석의 아름다움은 유지하면서 강도가 뛰어나고 오염에 강하다는 것입니다. <strong>대리석 주방 상판</strong>이나 식탁 상판에 주로 사용되며, <strong>엔지니어드 스톤 가격</strong>은 천연 대리석보다는 저렴하지만 일반 인조대리석보다는 비싼 편입니다.</p>
+            </div>
+
+            <div class="service-description">
+                <h3>3. 인조 대리석 (Artificial Marble)</h3>
+                <p>아크릴계 인조 대리석은 다양한 색상과 패턴을 쉽게 구현할 수 있으며, 가공이 용이하여 곡면 시공이 가능합니다. <strong>인조대리석 장점</strong>은 가격이 <strong>천연대리석</strong>이나 <strong>엔지니어드 스톤</strong>에 비해 저렴하고, 유지보수가 쉽다는 점입니다. <strong>인조 대리석 단점</strong>은 열에 약하고 내구성이 천연석에 비해 떨어진다는 것입니다.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: Cost Guide and Comparison -->
+        <section id="cost">
+            <h2>대리석 인테리어 비용: 2026년 최신 견적 가이드</h2>
+            <p><strong>대리석 인테리어 비용</strong>은 시공 면적, 자재 종류, 시공 방식(건식/습식), 마감 처리, 그리고 <strong>지역별 인건비</strong>에 따라 큰 차이가 발생합니다. <strong>대리석 견적</strong>을 문의할 때 단순히 '평당 가격'만 비교하면 나중에 추가 비용이 발생할 수 있으므로, 정확한 <strong>이사비용</strong> 산출 기준을 이해하는 것이 중요합니다. 특히 <strong>2026년</strong>에는 인플레이션과 원자재 가격 상승으로 인해 <strong>대리석 가격</strong>이 변동될 수 있으므로, 최신 정보를 바탕으로 꼼꼼하게 <strong>대리석 견적 비교</strong>를 해야 합니다.</p>
+
+            <h3>대리석 종류별 평당 예상 금액 (2026년 기준)</h3>
+            <p>아래 표는 <strong>천연대리석</strong>과 <strong>인조대리석</strong>의 대략적인 <strong>평당 예상 금액</strong>을 비교한 자료입니다. <strong>대리석 가격</strong>은 희귀성, 가공 난이도, 운반비 등에 따라 변동 폭이 큽니다. <strong>저렴한곳</strong>을 찾기 위해선 여러 업체의 <strong>견적</strong>을 받아보는 것이 좋습니다.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>평균 가격대 (평당/KRW)</th>
+                        <th>주요 특징 및 활용</th>
+                        <th>대표 키워드</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>천연대리석 (고가)</strong></td>
+                        <td>200,000 ~ 500,000+</td>
+                        <td>독특한 자연 무늬, 높은 품격, 주방 상판 및 아트월.</td>
+                        <td>천연대리석 비용, 고급 대리석 견적, 카라라 가격</td>
+                    </tr>
+                    <tr>
+                        <td><strong>엔지니어드 스톤</strong></td>
+                        <td>150,000 ~ 300,000</td>
+                        <td>높은 내구성 및 오염 방지, 주방 상판, <strong>대리석 장점</strong>과 실용성 결합.</td>
+                        <td>엔지니어드 스톤 비용, 칸스톤 가격, 인조대리석 비교</td>
+                    </tr>
+                    <tr>
+                        <td><strong>인조대리석 (아크릴계)</strong></td>
+                        <td>80,000 ~ 150,000</td>
+                        <td>가공 용이, 저렴한 가격, 일반 주방 상판 및 욕실.</td>
+                        <td>인조대리석 견적, 저렴한 주방 상판</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>대리석 인테리어 견적</strong>은 <strong>시공 면적</strong>이 넓을수록 평당 단가가 내려가는 경향이 있습니다. 또한 <strong>시공 난이도</strong>(컷팅, 코너 마감 등)와 <strong>철거 비용</strong>(기존 마감재)도 최종 <strong>금액</strong>에 큰 영향을 미칩니다.</p>
+
+            <h3>지역별 대리석 시공 견적 비교 (전국)</h3>
+            <p><strong>대리석 인테리어</strong>는 <strong>지역별 인건비 차이</strong>가 존재합니다. <strong>서울 대리석 인테리어 비용</strong>, <strong>부산 대리석 시공 금액</strong>, <strong>대구 대리석 견적</strong>, <strong>광주 대리석 가격</strong> 등 주요 대도시와 지방 간의 <strong>대리석 인테리어 비용</strong> 차이는 10~20% 내외로 발생할 수 있습니다. <strong>전국 대리석 인테리어</strong> 네트워크를 갖춘 업체는 자재 수급의 효율성을 통해 <strong>저렴한곳</strong>을 찾을 수 있게 도와줄 수 있습니다.</p>
+            <p><strong>경기도 대리석 인테리어</strong> 시공을 예로 들면, <strong>수원, 용인, 성남, 안양</strong> 등 대규모 아파트 단지 리모델링 수요가 많은 지역에서는 경쟁이 치열하여 <strong>합리적인 가격</strong>을 제시하는 업체가 많습니다. 반면 <strong>제주 대리석 인테리어</strong>처럼 물류비가 추가되는 지역은 <strong>예상 비용</strong>이 다소 높아질 수 있습니다. <strong>전주, 청주, 창원, 김해, 포항, 천안, 아산, 구미, 순천, 원주, 춘천, 강릉, 속초, 경주, 안동, 진주, 여수, 목포, 논산, 익산, 군산, 나주, 서귀포</strong> 등 전국 30개 이상의 지역에서 <strong>대리석 시공</strong>을 원하신다면 <strong>무료 견적</strong>을 통해 정확한 <strong>이사비용</strong>을 확인해 보세요.</p>
+        </section>
+
+        <!-- Section 4: Pros, Cons, and Comparison -->
+        <section id="compare">
+            <h2>대리석 인테리어 장단점 완벽 분석: 포세린 타일과의 차이점</h2>
+            <p><strong>대리석 인테리어</strong>를 결정하기 전에 <strong>장점</strong>과 <strong>단점</strong>을 명확히 이해해야 후회 없는 선택을 할 수 있습니다. <strong>대리석 장점</strong>과 <strong>단점</strong>을 정리하고, 최근 유행하는 <strong>포세린 타일</strong>과의 <strong>차이점</strong>을 비교하여 고객님의 환경에 가장 적합한 자재를 선택할 수 있도록 도와드립니다.</p>
+
+            <h3>대리석 인테리어의 명확한 장점</h3>
+            <ul>
+                <li><strong>고급스러운 미관:</strong> 자연스러운 패턴과 광택은 공간에 독보적인 <strong>품격</strong>을 더해줍니다. <strong>대리석 인테리어</strong>는 그 자체로 하나의 예술 작품이며, 주택 가치를 높이는 요소입니다.</li>
+                <li><strong>내구성 및 긴 수명:</strong> 적절한 관리(정기적인 실링)를 통해 수십 년간 사용 가능합니다. 시간이 지남에 따라 자연스럽게 마모되면서 생기는 질감 변화도 매력적입니다.</li>
+                <li><strong>다양한 활용성:</strong> <strong>주방 상판</strong>, <strong>거실 바닥</strong>, <strong>욕실 벽체</strong>, 가구 상판 등 활용 범위가 넓어 통일감 있는 인테리어가 가능합니다.</li>
+            </ul>
+
+            <h3>대리석 인테리어의 단점과 해결책</h3>
+            <ul>
+                <li><strong>오염 취약성:</strong> <strong>천연대리석</strong>은 다공성 물질로, 커피, 김칫국물, 산성 물질(식초, 레몬) 등에 의해 쉽게 얼룩지거나 부식됩니다. <strong>대리석 단점</strong> 중 가장 중요한 부분으로, <strong>정기적인 실링 작업</strong>이 필수입니다.</li>
+                <li><strong>높은 비용:</strong> <strong>천연대리석 가격</strong>은 다른 마감재에 비해 비싼 편입니다. <strong>대리석 시공 비용</strong>을 <strong>저렴한곳</strong>에서 찾더라도 자재 가격 자체가 높기 때문에 예산을 충분히 확보해야 합니다.</li>
+                <li><strong>난방 효율:</strong> 대리석 바닥은 열전도율이 낮아 겨울철 난방비가 더 많이 든다는 인식이 있습니다. 하지만 온돌 시스템에서는 오히려 열을 오래 보존하는 장점이 있어 난방 방식에 따라 장단점이 갈립니다.</li>
+            </ul>
+
+            <h3>대리석 vs 포세린 타일 vs 엔지니어드 스톤 비교</h3>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>비교 항목</th>
+                            <th>천연 대리석</th>
+                            <th>포세린 타일 (대리석 패턴)</th>
+                            <th>엔지니어드 스톤 (인조대리석)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>가격대</strong></td>
+                            <td>매우 높음</td>
+                            <td>중간~높음</td>
+                            <td>높음</td>
+                        </tr>
+                        <tr>
+                            <td><strong>무늬/질감</strong></td>
+                            <td>자연스러운 고유 패턴 (복제 불가능)</td>
+                            <td>패턴 복제 가능, 반복 무늬 가능성 있음</td>
+                            <td>균일한 패턴 구현 가능</td>
+                        </tr>
+                        <tr>
+                            <td><strong>내구성/스크래치</strong></td>
+                            <td>상대적으로 약함 (경도 낮음)</td>
+                            <td>매우 강함</td>
+                            <td>강함 (천연대리석보다 강함)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>오염/흡수율</strong></td>
+                            <td>높음 (실링 필수)</td>
+                            <td>매우 낮음 (생활 오염에 강함)</td>
+                            <td>낮음</td>
+                        </tr>
+                        <tr>
+                            <td><strong>활용 분야</strong></td>
+                            <td>고급 바닥, 벽체, 상판</td>
+                            <td>바닥, 벽체, 외장재</td>
+                            <td>주방 상판, 욕실 상판</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><strong>대리석과 포세린 타일 차이점</strong>을 보면, <strong>포세린 타일</strong>은 실용성과 내구성을 중시하는 고객에게, <strong>천연 대리석</strong>은 공간의 가치와 미관을 최우선으로 하는 고객에게 적합합니다. <strong>내돈내산 후기</strong>를 찾아보면, 관리에 자신이 없거나 <strong>저렴한곳</strong>을 찾는 분들은 <strong>포세린 타일</strong>을 선택하기도 합니다.</p>
+        </section>
+
+        <!-- Section 5: Case Studies and Reviews -->
+        <section id="reviews">
+            <h2>대리석 시공 내돈내산 후기 및 베스트 시공 사례</h2>
+            <p>실제 <strong>대리석 인테리어</strong>를 진행한 고객들의 <strong>내돈내산 후기</strong>와 <strong>베스트 시공 사례</strong>를 통해 <strong>대리석 인테리어 순위</strong>가 높은 시공업체의 노하우를 확인하세요. <strong>주방 상판</strong>부터 <strong>바닥 인테리어</strong>까지, 고객님의 공간을 변화시킨 다양한 사례들을 소개합니다.</p>
+            <ul>
+                <li><strong>후기 1 (서울 강남구 고객님):</strong> "<strong>천연대리석 주방 상판</strong> 시공을 위해 <strong>대리석 견적 비교</strong>를 여러 업체와 진행했습니다. 최종적으로 <strong>저렴한곳</strong>을 찾기보다는 전문성이 높은 업체를 선택했는데, <strong>비앙코 카라라</strong> 상판 마감이 완벽했습니다. <strong>대리석 단점</strong>인 관리에 대한 팁도 자세히 알려주셔서 만족스러운 <strong>내돈내산 후기</strong>입니다."</li>
+                <li><strong>후기 2 (부산 해운대구 고객님):</strong> "<strong>대리석 바닥</strong> 시공으로 집 전체 분위기가 확 바뀌었습니다. 처음엔 <strong>대리석 비용</strong> 때문에 망설였지만, <strong>대리석 인테리어 장점</strong>인 고급스러움을 포기할 수 없었습니다. <strong>부산 대리석 시공</strong> 전문가의 <strong>추천</strong>으로 <strong>엔지니어드 스톤</strong>을 선택했고, <strong>천연대리석</strong> 못지않은 만족감을 얻었습니다."</li>
+                <li><strong>후기 3 (대전 유성구 고객님):</strong> "<strong>대리석 아트월 인테리어</strong>를 고민했습니다. <strong>포세린 타일</strong>과 <strong>천연 대리석 차이점</strong>을 전문가에게 상담받은 후, 거실 아트월은 <strong>천연 대리석</strong>으로, 바닥은 <strong>포세린 타일</strong>로 <strong>추천</strong>받아 섞어서 시공했습니다. <strong>대리석 시공 비용</strong>을 절약하면서도 고급스러움을 놓치지 않은 <strong>내돈내산 인테리어</strong>입니다."</li>
+            </ul>
+        </section>
+
+        <!-- Section 6: Maintenance Tips and FAQ -->
+        <section id="faq">
+            <h2>대리석 인테리어 유지보수 및 자주 묻는 질문 (FAQ)</h2>
+            <p><strong>대리석 인테리어</strong>는 관리가 중요합니다. <strong>대리석 유지보수</strong>를 통해 <strong>대리석 단점</strong>을 최소화하고 <strong>천연대리석</strong>의 아름다움을 오래도록 유지할 수 있습니다. <strong>대리석 시공</strong> 전에 반드시 알아야 할 <strong>자주 묻는 질문</strong>을 정리했습니다.</p>
+            <dl class="faq-accordion">
+                <dt tabindex="0" aria-expanded="false">Q1. 대리석 인테리어의 가장 큰 단점은 무엇이며, 어떻게 관리해야 하나요?</dt>
+                <dd><strong>A1.</strong> <strong>천연대리석의 단점</strong>은 다공성으로 인해 오염에 취약하다는 점입니다. 산성 물질(식초, 레몬, 탄산음료)에 노출되면 부식되거나 얼룩이 생길 수 있습니다. 이를 방지하기 위해 <strong>정기적인 실링 작업</strong>이 필수입니다. 일상 관리 시에는 중성세제나 대리석 전용 세제를 사용하고, 얼룩이 생기면 즉시 닦아내는 것이 중요합니다.</dd>
+                <dt tabindex="0" aria-expanded="false">Q2. 천연대리석과 엔지니어드 스톤 중 어떤 것을 선택해야 할까요?</dt>
+                <dd><strong>A2.</strong> <strong>천연대리석과 엔지니어드 스톤의 차이점</strong>은 내구성과 가격입니다. <strong>천연대리석</strong>은 독보적인 아름다움이 장점이지만 관리가 까다롭고 <strong>대리석 비용</strong>이 높습니다. <strong>엔지니어드 스톤</strong>은 <strong>천연대리석</strong>의 외관을 가지면서도 내구성(스크래치, 오염)이 뛰어나 관리가 쉽습니다. <strong>주방 상판</strong> 등 실용성이 중요한 공간에는 <strong>엔지니어드 스톤</strong>을, <strong>아트월</strong>처럼 미관을 중시하는 공간에는 <strong>천연대리석</strong>을 <strong>추천</strong>합니다.</dd>
+                <dt tabindex="0" aria-expanded="false">Q3. 대리석 인테리어 시공 후 짐이 파손되거나 시공에 문제가 발생하면 어떻게 되나요?</dt>
+                <dd><strong>A3.</strong> 저희 플랫폼과 제휴된 모든 <strong>대리석 시공업체</strong>는 전문 보험에 가입되어 있습니다. <strong>대리석 시공</strong> 중 발생하는 자재 파손이나 고객 재산 피해에 대해 신속하게 보상 절차를 진행합니다. 또한 <strong>시공 후</strong> 하자에 대해서도 일정 기간 무상 A/S를 제공합니다.</dd>
+                <dt tabindex="0" aria-expanded="false">Q4. 대리석 인테리어 시공 시 짐을 모두 빼야 하나요?</dt>
+                <dd><strong>A4.</strong> <strong>대리석 바닥 시공</strong>을 진행할 경우 짐을 모두 이동해야 합니다. <strong>대리석 인테리어</strong>는 자재의 무게가 무겁고(<strong>대리석 단점</strong>), 먼지 발생이 많으므로 짐을 보호하고 안전한 작업을 위해 모든 짐을 비우는 것이 원칙입니다. 부분 시공 시에는 해당 구역의 짐만 이동해도 가능합니다.</dd>
+                <dt tabindex="0" aria-expanded="false">Q5. 대리석 시공업체 순위나 <strong>저렴한곳</strong>은 어떻게 찾을 수 있나요?</dt>
+                <dd><strong>A5.</strong> <strong>대리석 시공업체 순위</strong>는 존재하지 않습니다. <strong>저렴한곳</strong>을 찾는 것도 중요하지만, <strong>천연대리석</strong>은 고가 자재이므로 <strong>저렴한곳</strong>만을 고집하기보다 전문성과 <strong>후기</strong>를 통해 검증된 업체를 선택하는 것이 중요합니다. 저희 플랫폼을 통해 <strong>전국 대리석 인테리어</strong> 전문가들의 <strong>견적</strong>을 <strong>비교</strong>하고, <strong>내돈내산 후기</strong>를 참고하여 <strong>추천</strong>받을 수 있습니다.</dd>
+            </dl>
+        </section>
+
+        <!-- Section 7: External Links for Credibility -->
+        <section class="external-links">
+            <h2>대리석 관련 신뢰성 있는 정보 (외부 참고 자료)</h2>
+            <p><strong>대리석 인테리어</strong>에 대한 더 깊은 정보를 원하시면 아래 공신력 있는 외부 사이트를 참고하세요. <strong>대리석 인테리어</strong> 관련 지식은 <strong>대리석 견적</strong>을 비교하거나 <strong>대리석 시공업체</strong>를 선정하는 데 큰 도움이 됩니다.</p>
+            <ul>
+                <li><a href="https://namu.wiki/w/%EB%8C%80%EB%A6%AC%EC%84%9D" target="_blank">나무위키: 대리석 (Marble) - 특징 및 종류</a></li>
+                <li><a href="https://www.kcl.re.kr/" target="_blank">한국건설생활환경시험연구원 - 건축자재 정보</a></li>
+                <li><a href="https://terms.naver.com/entry.naver?docId=581977&cid=42892&categoryId=42892" target="_blank">네이버 지식백과: 대리석</a></li>
+                <li><a href="https://www.molit.go.kr/portal/main.do" target="_blank">국토교통부 (건축물 관련 법규 확인)</a></li>
+                <li><a href="https://www.stonemagazine.com/" target="_blank">Stone Magazine (글로벌 석재 전문 매거진)</a></li>
+            </ul>
+        </section>
+
+        <!-- Section 8: Consultation Form -->
+        <section id="contact">
+            <h2><strong>전국 대리석 인테리어</strong> 전문가 <strong>무료 견적</strong> 요청하기</h2>
+            <p><strong>대리석 인테리어</strong>를 시작할 준비가 되셨나요? 고객님의 공간, 예산, 원하는 <strong>대리석 종류</strong>에 맞춰 최적의 <strong>대리석 시공업체</strong>를 <strong>추천</strong>해 드립니다. <strong>대리석 비용</strong>은 <strong>견적</strong>을 받아봐야 정확히 알 수 있습니다. 아래 폼을 작성하시면 <strong>2026년</strong> 최신 데이터를 기반으로 <strong>대리석 견적 비교</strong> 서비스를 제공하고, <strong>저렴한곳</strong>부터 <strong>고급 시공</strong>까지 고객님께 딱 맞는 <strong>대리석 인테리어</strong> 전문가를 연결해 드립니다.</p>
+            <form class="contact-form" action="submit_form.php" method="POST">
+                <fieldset>
+                    <legend>대리석 인테리어 상담 신청</legend>
+                    <label for="name">이름:</label>
+                    <input type="text" id="name" name="name" placeholder="이름을 입력해 주세요" required>
+
+                    <label for="phone">연락처:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="전화번호를 입력해 주세요 (예: 010-1234-5678)" required>
+
+                    <label for="email">이메일:</label>
+                    <input type="email" id="email" name="email" placeholder="이메일 주소를 입력해 주세요">
+
+                    <label for="region">시공 희망 지역:</label>
+                    <select id="region" name="region" required>
+                        <option value="">지역 선택</option>
+                        <option value="서울">서울</option>
+                        <option value="부산">부산</option>
+                        <option value="대구">대구</option>
+                        <option value="인천">인천</option>
+                        <option value="광주">광주</option>
+                        <option value="대전">대전</option>
+                        <option value="울산">울산</option>
+                        <option value="세종">세종</option>
+                        <option value="경기">경기도 (수원, 용인, 성남, 안양 등)</option>
+                        <option value="강원">강원도 (춘천, 원주, 강릉, 속초 등)</option>
+                        <option value="충북">충청북도 (청주, 충주, 제천 등)</option>
+                        <option value="충남">충청남도 (천안, 아산, 논산 등)</option>
+                        <option value="전북">전라북도 (전주, 익산, 군산 등)</option>
+                        <option value="전남">전라남도 (순천, 여수, 목포, 나주 등)</option>
+                        <option value="경북">경상북도 (포항, 구미, 경주, 안동 등)</option>
+                        <option value="경남">경상남도 (창원, 김해, 진주, 양산 등)</option>
+                        <option value="제주">제주도 (제주, 서귀포)</option>
+                    </select>
+
+                    <label for="area">시공 면적 (평수):</label>
+                    <input type="text" id="area" name="area" placeholder="예: 30평형 아파트, 주방 상판만" required>
+
+                    <label for="type_of_work">시공 희망 분야:</label>
+                    <select id="type_of_work" name="type_of_work" required>
+                        <option value="">선택</option>
+                        <option value="주방 상판">주방 상판 (싱크대)</option>
+                        <option value="거실 바닥">거실 바닥 전체</option>
+                        <option value="벽체 아트월">벽체 아트월</option>
+                        <option value="욕실/세면대 상판">욕실/세면대 상판</option>
+                        <option value="전체 인테리어">대리석 전체 인테리어</option>
+                        <option value="기타">기타 (아래 메시지에 상세 작성)</option>
+                    </select>
+
+                    <label for="message">요청 사항 (원하는 대리석 종류, 예산 등):</label>
+                    <textarea id="message" name="message" placeholder="원하는 대리석 종류 (예: 비앙코 카라라), 예산 범위 (예: 500만원), 기타 요청사항을 구체적으로 작성해 주세요."></textarea>
+
+                    <button type="submit">무료 견적 요청</button>
+                </fieldset>
+            </form>
+            <p style="text-align: center;">전화 문의: <a href="tel:010-1234-5678" style="color: #c4a79a; text-decoration: none; font-weight: 700;">010-1234-5678</a></p>
+        </section>
     </main>
-  </body>
-</html>
+
+    <script>
+        // FAQ 아코디언 기능 (접기/펼치기)
+        document.querySelectorAll('dl.faq-accordion dt').forEach((dt) => {
+            dt.addEventListener('click', () => {
+                const isActive = dt.classList.contains('active');
+                // 모든 dd 닫기
+                document.querySelectorAll('dl.faq-accordion dd').forEach(dd => {
+                    dd.style.display = 'none';
+                });
+                // 모든 dt 비활성화
+                document.querySelectorAll('dl.faq-accordion dt').forEach(dtItem => {
+                    dtItem.classList.remove('active');
+                    dtItem.setAttribute('aria-expanded', 'false');
+                });
+
+                if (!isActive) {
+                    // 클릭한 dt 활성화 및 해당 dd 열기
+                    dt.classList.add('active');
+                    dt.setAttribute('aria-expanded', 'true');
+                    const dd = dt.nextElementSibling;
+                    if (dd && dd.tagName.toLowerCase() === 'dd') {
+                        dd.style.display = 'block';
+                    }
+                }
+            });
+            dt.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    dt.click();
+                }
+            });
+        });
+    </script>
+
+
+  
